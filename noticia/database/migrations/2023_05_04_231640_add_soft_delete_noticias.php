@@ -9,25 +9,23 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
         //
         Schema::table('noticias', function (Blueprint $table){
-            $table->foreign('autor')
-                    ->references('id')
-                    ->on('users')
-                    ->onDelete('cascade')
-                    ->onUpdate('cascade');
+            $table->softDeletes();
         });
+        
     }
 
     /**
      * Reverse the migrations.
      */
-    public function down(): void
+    public function down()
     {
-        Schema::table('noticias', function (Blueprint $table){
-            $table->dropForeign('noticias_autor_foreign');
+        //
+        Schema::table('noticias', function(Blueprint $table){
+            $table->dropColumn('deleted_at');
         });
     }
 };
